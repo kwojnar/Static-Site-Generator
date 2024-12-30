@@ -9,9 +9,11 @@ class HTMLNode():
         raise NotImplementedError()
 
     def props_to_html(self):
+        if not self.props:
+            return ""
         html_output = ""
-        for prop_key, prop_value in self.props.items():
-            html_output += f' {prop_key}="{prop_value}"'
+        for prop in self.props:
+            html_output += f' {prop}="{self.props[prop]}"'
         return html_output
 
     def __eq__(self, other):
@@ -39,3 +41,13 @@ class LeafNode(HTMLNode):
 class ParentNode(HTMLNode):
     def __init__(self, tag, children, props=None):
         super().__init__(tag, None, children, props)
+
+    def to_html(self):
+        if not self.tag:
+            raise ValueError("Missing Tag")
+        if not self.children:
+            raise ValueError("Missing Chlidren Value")
+        html_result = ""
+        for child in self.children:
+            html_result += child.to_html()
+        return f"<{self.tag}{self.props_to_html()}>{html_result}</{self.tag}>"
