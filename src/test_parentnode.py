@@ -38,7 +38,7 @@ class TestParentNode(unittest.TestCase):
 
     def test_noChildren(self):
         node = ParentNode("p", [])
-        self.assertRaises(Exception, node.to_html, None)
+        self.assertRaises(ValueError, node.to_html)
 
 if __name__ == "__main__":
     unittest.main()
