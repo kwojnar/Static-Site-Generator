@@ -209,6 +209,39 @@ class TestSplitNodesOnImagesAndLinks(unittest.TestCase):
             new_nodes,
         )
 
+class TestTextToTextNodes(unittest.TestCase):
+    def test_extract_all_cases_present(self):
+        text = "This is **text** with an *italic* word and a `code block` and an ![obi wan image](https://i.imgur.com/fJRm4Vk.jpeg) and a [link](https://boot.dev)"           
+        test_case = text_to_textnodes(text)
+        expected_result = [
+            TextNode("This is ", TextType.NORMAL, None),
+            TextNode("text", TextType.BOLD, None),
+            TextNode(" with an ", TextType.NORMAL, None),
+            TextNode("italic", TextType.ITALIC, None),
+            TextNode(" word and a ", TextType.NORMAL),
+            TextNode("code block", TextType.CODE, None),
+            TextNode(" and an ", TextType.NORMAL, None),
+            TextNode("obi wan image", TextType.IMAGE, "https://i.imgur.com/fJRm4Vk.jpeg"),
+            TextNode(" and a ", TextType.NORMAL, None),
+            TextNode("link", TextType.LINK, "https://boot.dev"),
+        ]
+        self.assertEqual(test_case, expected_result)
+
+    def test_extract_some_cases_missing(self):
+        text = "This is text with an *italic* word and a `code block` and an [obi wan image](https://i.imgur.com/fJRm4Vk.jpeg) and a [link](https://boot.dev)"           
+        test_case = text_to_textnodes(text)
+        expected_result = [
+            TextNode("This is text with an ", TextType.NORMAL, None),
+            TextNode("italic", TextType.ITALIC, None),
+            TextNode(" word and a ", TextType.NORMAL),
+            TextNode("code block", TextType.CODE, None),
+            TextNode(" and an ", TextType.NORMAL, None),
+            TextNode("obi wan image", TextType.LINK, "https://i.imgur.com/fJRm4Vk.jpeg"),
+            TextNode(" and a ", TextType.NORMAL, None),
+            TextNode("link", TextType.LINK, "https://boot.dev"),
+        ]
+        self.assertEqual(test_case, expected_result)
+
 
 if __name__ == "__main__":
     unittest.main()

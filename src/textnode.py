@@ -116,3 +116,11 @@ def split_nodes_image(old_nodes):
     return new_nodes
 
 
+def text_to_textnodes(text):
+    text_node = TextNode(text, TextType.NORMAL)
+    nodes = split_nodes_delimiter([text_node], "`", TextType.CODE)
+    nodes = split_nodes_delimiter(nodes, "**", TextType.BOLD)
+    nodes = split_nodes_delimiter(nodes, "*", TextType.ITALIC)
+    nodes = split_nodes_image(nodes)
+    nodes = split_nodes_link(nodes)
+    return nodes
