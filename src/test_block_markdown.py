@@ -57,6 +57,19 @@ This is the same paragraph on a new line
                 "* This is a list\n* with items",
             ],
         )
+    def test_markdown_to_blocks_newlines(self):
+        markdown = """
+This is **bolded** paragraph
+
+# Title!!!
+This is another paragraph with *italic* text and `code` here
+This is the same paragraph on a new line
+
+* This is a list
+* with items
+"""
+        title = "Title!!!"
+        self.assertEqual(title, extract_title(markdown))
 
 class TestBlockMarkdownType(unittest.TestCase):
     def test_heading(self):

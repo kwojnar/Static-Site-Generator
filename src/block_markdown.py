@@ -94,8 +94,8 @@ def makrdown_to_html_node(markdown):
     return ParentNode(tag="div", children=children_nodes)
 
 def extract_title(markdown):
-    lines = markdown.split()
+    lines = markdown.split("\n")
     for line in lines:
         if line.startswith("# "):
-            return line.rstrip("# ")
+            return line.lstrip("# ")
     raise Exception("Title header not found in provided markdown!")
