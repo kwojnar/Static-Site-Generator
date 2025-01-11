@@ -17,7 +17,7 @@ def markdown_to_blocks(markdown):
 def block_to_block_type(markdown_block):
     heading_regex = r"^#{1,6}\s*\w"
     code_regex = r"^`{3}[^`]*`{3}$"
-    quote_regex = r"^>\s*\w"
+    quote_regex = r"^>.*"
     unordered_list_regex = r"^[*-]\s*"
     ordered_list_regex = r"^\d*[.]\s*"
     ordered_list__start_regex = r"^1*[.]\s*"
