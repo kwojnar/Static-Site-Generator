@@ -92,3 +92,9 @@ def makrdown_to_html_node(markdown):
         markdown_block_type = block_to_block_type(markdown_block)
         children_nodes.append(markdown_block_to_html_node(markdown_block, markdown_block_type))
     return ParentNode(tag="div", children=children_nodes)
+
+def extract_title(markdown):
+    lines = markdown.split()
+    for line in lines:
+        if line.startswith("# "):
+            return line.rstrip("# ")

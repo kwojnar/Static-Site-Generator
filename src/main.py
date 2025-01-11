@@ -26,10 +26,10 @@ def copy_files_from_source(source_path, destination_path):
 def update_destination_directory(source_path, destination_path):
     if not os.path.exists(source_path):
         raise Exception(f"Source path does not exist: {source_path}")
-    if not os.path.exists(destination_path):
-        os.mkdir(destination_path)
-    else:
+    if os.path.exists(destination_path):
         shutil.rmtree(destination_path)
+        os.mkdir(destination_path)
+    else:        
         os.mkdir(destination_path)
     copy_files_from_source(source_path, destination_path)
 
