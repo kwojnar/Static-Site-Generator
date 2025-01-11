@@ -98,3 +98,4 @@ def extract_title(markdown):
     for line in lines:
         if line.startswith("# "):
             return line.rstrip("# ")
+    raise Exception("Title header not found in provided markdown!")
