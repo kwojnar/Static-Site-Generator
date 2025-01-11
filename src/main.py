@@ -13,10 +13,8 @@ def main():
 
 def copy_files_from_source(source_path, destination_path):
     files = os.listdir(source_path)
-    print(files)
     for file in files:
         file_path = source_path + "/" + file
-        print(file_path)
         if os.path.isfile(file_path):
             shutil.copy(file_path, destination_path)
         else:
