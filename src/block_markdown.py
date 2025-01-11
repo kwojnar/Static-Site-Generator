@@ -21,7 +21,7 @@ def block_to_block_type(markdown_block):
     heading_regex = r"^#{1,6}\s*\w"
     code_regex = r"^`{3}[^`]*`{3}$"
     quote_regex = r"^>.*"
-    unordered_list_regex = r"^[*-]\s*"
+    unordered_list_regex = r"^[*-]\s.*"
     ordered_list_regex = r"^\d*[.]\s*"
     ordered_list__start_regex = r"^1*[.]\s*"
     if re.search(heading_regex, markdown_block):
@@ -62,7 +62,7 @@ def markdown_block_to_html_node(markdown_block, markdown_block_type):
         case BlockType.block_type_heading:
             count = re.match(r"(^#*\s)", markdown_block).end()
             html_nodes = text_to_html_nodes(markdown_block[count:])
-            return ParentNode(tag=f"h{count}", children=html_nodes)
+            return ParentNode(tag=f"h{count-1}", children=html_nodes)
         case BlockType.block_type_code:
             html_nodes = text_to_html_nodes(markdown_block.strip("```"))
             return ParentNode(tag="code", children=html_nodes)
@@ -70,7 +70,7 @@ def markdown_block_to_html_node(markdown_block, markdown_block_type):
             quote_blocks = markdown_block.split("\n")
             quote_markdown_block = "\n".join(map(lambda line: line.lstrip("> "), quote_blocks))
             html_nodes = text_to_html_nodes(quote_markdown_block)
-            return ParentNode(tag="quote", children=html_nodes)
+            return ParentNode(tag="blockquote", children=html_nodes)
         case BlockType.block_type_ulist:
             ulist_blocks = markdown_block.split("\n")
             ulist_blocks = list(map(lambda line: line[2:], ulist_blocks))
